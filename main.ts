@@ -33,7 +33,10 @@ function change_id (change: number) {
     basic.showNumber(id)
 }
 function show_target () {
-	
+    led.plotBarGraph(
+    target_light,
+    255
+    )
 }
 function change_id_mode () {
     id_change_timeout = control.millis() + 10000
@@ -47,6 +50,7 @@ function change_id_mode () {
     }
     blink_number(id)
 }
+let radio_message = ""
 let current_light = 0
 let id_change_timeout = 0
 let is_id_change_mode = false
@@ -60,7 +64,8 @@ basic.forever(function () {
     if (!(is_id_change_mode)) {
         current_light = input.lightLevel()
         if (Math.abs(current_light - target_light) > 5) {
-            radio.sendString("" + id + "," + current_light + "," + target_light)
+            radio_message = "" + id + "," + current_light + "," + target_light
+            radio.sendString(radio_message)
             basic.pause(10000)
         }
     }
