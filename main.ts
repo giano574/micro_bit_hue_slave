@@ -29,7 +29,7 @@ input.onButtonPressed(Button.B, function () {
 })
 function change_id (change: number) {
     id += change
-    id_change_timeout = control.millis() + 10000
+    id_change_timeout = control.millis() + CHANGE_ID_MODE_TIMEOUT
     basic.showNumber(id)
 }
 function show_target () {
@@ -39,7 +39,7 @@ function show_target () {
     )
 }
 function change_id_mode () {
-    id_change_timeout = control.millis() + 10000
+    id_change_timeout = control.millis() + CHANGE_ID_MODE_TIMEOUT
     basic.showNumber(id)
     while (control.millis() < id_change_timeout) {
         if (input.buttonIsPressed(Button.A)) {
@@ -53,10 +53,12 @@ function change_id_mode () {
 let current_light = 0
 let id_change_timeout = 0
 let is_id_change_mode = false
+let CHANGE_ID_MODE_TIMEOUT = 0
 let target_light = 0
 let id = 0
 id = 1
 target_light = Math.round(255 / 2)
+CHANGE_ID_MODE_TIMEOUT = 5000
 show_target()
 radio.setGroup(1)
 basic.forever(function () {
