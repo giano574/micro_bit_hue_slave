@@ -50,6 +50,7 @@ function change_id_mode () {
     }
     blink_number(id)
 }
+let current_light = 0
 let id_change_timeout = 0
 let is_id_change_mode = false
 let target_light = 0
@@ -60,8 +61,9 @@ show_target()
 radio.setGroup(1)
 basic.forever(function () {
     if (!(is_id_change_mode)) {
-        if (Math.abs(input.lightLevel() - target_light) > 0) {
-            radio.sendString("" + id + "," + input.lightLevel() + "," + target_light)
+        current_light = input.lightLevel()
+        if (Math.abs(current_light - target_light) > 0) {
+            radio.sendString("" + id + "," + current_light + "," + target_light)
             basic.pause(10000)
         }
     }
