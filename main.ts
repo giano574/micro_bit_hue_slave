@@ -11,21 +11,29 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
     is_id_change_mode = true
     change_id_mode()
     is_id_change_mode = false
+    show_target()
 })
 input.onButtonPressed(Button.A, function () {
     if (!(is_id_change_mode)) {
-    	
+        change_target(-10)
     }
 })
+function change_target (value: number) {
+    target_light = Math.min(255, Math.max(0, target_light + value))
+    show_target()
+}
 input.onButtonPressed(Button.B, function () {
     if (!(is_id_change_mode)) {
-    	
+        change_target(10)
     }
 })
 function change_id (change: number) {
     id += change
     id_change_timeout = control.millis() + 10000
     basic.showNumber(id)
+}
+function show_target () {
+	
 }
 function change_id_mode () {
     id_change_timeout = control.millis() + 10000
@@ -39,7 +47,21 @@ function change_id_mode () {
     }
     blink_number(id)
 }
+let current_light = 0
 let id_change_timeout = 0
 let is_id_change_mode = false
+let target_light = 0
 let id = 0
 id = 1
+target_light = 255 / 2
+show_target()
+radio.setGroup(1)
+basic.forever(function () {
+    if (!(is_id_change_mode)) {
+        current_light = input.lightLevel()
+        if (Math.abs(current_light - target_light) > 5) {
+            radio.sendString("" + id + "," + current_light + "," + target_light)
+            basic.pause(10000)
+        }
+    }
+})
