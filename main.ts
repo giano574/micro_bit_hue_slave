@@ -28,7 +28,7 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 function change_id (change: number) {
-    id = id + Math.max(1, Math.min(10, id + change))
+    id = Math.max(1, Math.min(10, id + 0))
     id_change_timeout = control.millis() + CHANGE_ID_MODE_TIMEOUT
     basic.showNumber(id)
 }
