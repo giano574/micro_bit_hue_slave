@@ -8,7 +8,19 @@ function blink_number (number: number) {
     }
 }
 input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+    is_id_change_mode = true
     change_id_mode()
+    is_id_change_mode = false
+})
+input.onButtonPressed(Button.A, function () {
+    if (!(is_id_change_mode)) {
+    	
+    }
+})
+input.onButtonPressed(Button.B, function () {
+    if (!(is_id_change_mode)) {
+    	
+    }
 })
 function change_id (change: number) {
     id += change
@@ -28,5 +40,6 @@ function change_id_mode () {
     blink_number(id)
 }
 let id_change_timeout = 0
+let is_id_change_mode = false
 let id = 0
 id = 1
